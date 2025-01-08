@@ -2,6 +2,7 @@ import CabinCard from "@/app/_components/CabinCard";
 import { getCabins } from "../_lib/data-service";
 import CabinList from "../_components/CabinList";
 import { Suspense } from "react";
+import Spinner from "../_components/Spinner";
 
 
 export const metadata = {
@@ -24,7 +25,12 @@ export default function Page() {
         to paradise.
       </p>
 
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={
+        <div className="grid items-center justify-center">
+          <Spinner />
+          <p className="text-xl text-primary-200">Loading cabin data...</p>
+        </div>
+        }>
         <CabinList /> 
       </Suspense>
 
