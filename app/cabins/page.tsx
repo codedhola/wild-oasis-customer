@@ -3,6 +3,7 @@ import { getCabins } from "../_lib/data-service";
 import CabinList from "../_components/CabinList";
 import { Suspense } from "react";
 import Spinner from "../_components/Spinner";
+import Filter from "../_components/Filter";
 
 
 export const revalidate = 3600;
@@ -12,8 +13,9 @@ export const metadata = {
   title: 'Cabins',
 }   
 
-export default function Page() {
+export default async function Page({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 
+  const capacity = await searchParams.capacity ?? "all";
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -28,13 +30,17 @@ export default function Page() {
         to paradise.
       </p>
 
+      <div className="flex justify-end mb-8">
+        <Filter />
+      </div>
+
       <Suspense fallback={
         <div className="grid items-center justify-center">
           <Spinner />
           <p className="text-xl text-primary-200">Loading cabin data...</p>
         </div>
-        }>
-        <CabinList /> 
+        } key={capacity as string}>
+        <CabinList key={capacity as string} filter={capacity as string} /> 
       </Suspense>
 
     </div>
