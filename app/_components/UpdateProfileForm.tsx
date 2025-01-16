@@ -1,10 +1,13 @@
 import React from 'react'
+import { updateGuestAction } from '../_lib/actions';
 
+interface UpdateProfileFormProps {
+  children: React.ReactNode;
+  guest: any;
+}
 
-export default function UpdateProfileForm({ children }: { children: React.ReactNode }) {
+export default function UpdateProfileForm({ children, guest }: UpdateProfileFormProps) {
 
-    const countryFlag = "pt.jpg";
-    const nationality = "portugal";
 
   return (
     <div>
@@ -17,11 +20,13 @@ export default function UpdateProfileForm({ children }: { children: React.ReactN
         faster and smoother. See you soon!
       </p>
 
-      <form className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col">
+      <form className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col" action={updateGuestAction}>
         <div className="space-y-2">
           <label>Full name</label>
           <input
             disabled
+            value={guest?.fullName}
+            name="fullName"
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
           />
         </div>
@@ -30,6 +35,8 @@ export default function UpdateProfileForm({ children }: { children: React.ReactN
           <label>Email address</label>
           <input
             disabled
+            value={guest?.email}
+            name="email"
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
           />
         </div>
@@ -38,7 +45,7 @@ export default function UpdateProfileForm({ children }: { children: React.ReactN
           <div className="flex items-center justify-between">
             <label htmlFor="nationality">Where are you from?</label>
             <img
-              src={countryFlag}
+              src={guest?.country_flag}
               alt="Country flag"
               className="h-5 rounded-sm"
             />
@@ -49,7 +56,8 @@ export default function UpdateProfileForm({ children }: { children: React.ReactN
         <div className="space-y-2">
           <label htmlFor="nationalID">National ID number</label>
           <input
-            name="nationalID"
+            name="national_id"
+            value={guest?.national_id}
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
           />
         </div>
