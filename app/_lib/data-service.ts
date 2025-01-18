@@ -201,18 +201,20 @@ export async function updateGuest(id, updatedFields) {
 }
 
 export async function updateBooking(id, updatedFields) {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('bookings')
     .update(updatedFields)
-    .eq('id', id)
+    .eq('id', parseInt(id))
     .select()
     .single();
+
 
   if (error) {
     console.error(error);
     throw new Error('Booking could not be updated');
   }
-  return data;
+
+  return; 
 }
 
 /////////////
