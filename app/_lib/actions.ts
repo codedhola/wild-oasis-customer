@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
-import { updateBooking, updateGuest } from "./data-service";
+import { createBooking, updateBooking, updateGuest } from "./data-service";
 import { redirect } from "next/navigation";
 
 export async function signInAction() {
@@ -50,6 +50,29 @@ export async function updateReservationAction(formData: FormData) {
   await updateBooking(id, payload);
   revalidatePath("/account/reservations");
   redirect("/account/reservations");
+}
+
+export async function createBookingAction(bookingData, formData) {
+  const session: any = await auth();
+  if (!session) throw new Error("You must be logged in");
+
+  const newBooking = {
+    ...bookingData,
+    guest_id: session.user.guestId,
+    num_guests: Number(formData.get("numGuests")),
+    observations: formData.get("observations").slice(0, 1000),
+    extra_price: 0,
+    total_price: bookingData.cabin_price,
+    is_paid: false,
+    has_breakfast: false,
+    status: "unconfirmed",
+  };
+
+  await createBooking(newBooking)
+
+  revalidatePath(`/cabins/${bookingData.cabinId}`);
+
+  redirect("/cabins/thankyou");
 }
 
 export async function signOutAction() {
