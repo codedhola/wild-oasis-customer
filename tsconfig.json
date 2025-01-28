@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "types": ["@types/react"],
     "paths": {
       "@/app/*": ["app/*"],
       "@/public/*": ["public/*"]
