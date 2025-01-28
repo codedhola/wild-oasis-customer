@@ -1,4 +1,4 @@
 ### WIld Oasis (Client)
 
-This project is made with Vite, code written by Coded Hola ❤️
+This project is made with Nextjs, code written by Coded Hola ❤️
 
