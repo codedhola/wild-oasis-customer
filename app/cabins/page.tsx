@@ -13,9 +13,9 @@ export const metadata = {
   title: 'Cabins',
 }   
 
-export default async function Page({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+export default async function Page({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
 
-  const capacity = await searchParams.capacity ?? "all";
+  const capacity = (await (searchParams)).capacity ?? "all";
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">

@@ -6,8 +6,9 @@ import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { Suspense } from "react";
 
-export const generateMetadata = async ({ params }: { params: { cabinId: string } }) => {
-  const cabin = await getCabin(params.cabinId);
+export const generateMetadata = async ({ params }: { params: Promise<{ cabinId: string }> }) => {
+  const id = (await (params)).cabinId
+  const cabin = await getCabin(id);
   return {
     title: `Cabin ${cabin.name}`,
   };
@@ -21,8 +22,9 @@ export async function generateStaticParams() {
     return ids;
   }
 
-export default async function Page({ params }: { params: { cabinId: string } }) {
-    const cabin = await getCabin(params.cabinId);
+export default async function Page({ params }: { params: Promise<{ cabinId: string }> }) {
+  const id = (await (params)).cabinId
+  const cabin = await getCabin(id);
 
 
   return (

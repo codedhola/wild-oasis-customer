@@ -2,9 +2,9 @@ import { updateReservationAction } from "@/app/_lib/actions";
 import { auth } from "@/app/_lib/auth";
 import { getBooking, getCabin } from "@/app/_lib/data-service";
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params:  Promise<{ id: string }> }) {
 
-    const id = await (params).id;
+    const id = (await (params)).id;
     const session: any = await auth();
     const reservation = await getBooking(id);
 
